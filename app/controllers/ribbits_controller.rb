@@ -1,5 +1,10 @@
 class RibbitsController < ApplicationController
 
+  def index
+    @ribbits = Ribbit.all include: :user
+    @ribbit = Ribbit.new
+  end
+
   def create
   @ribbit = Ribbit.new(params[:ribbit])
   @ribbit.userid = current_user.id
