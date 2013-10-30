@@ -2,6 +2,10 @@ class User < ActiveRecord::Base
   before_validation :prep_email
   before_save :create_avatar_url
 
+  has_many :follower_relationships, classname: "Relationship", foreign_key: "followed_id"
+  has_many :followed_relationships, classname: "Relationship", foreign_key: "follower_id"
+
+
   has_many :ribbits
 
   has_secure_password
@@ -11,6 +15,14 @@ class User < ActiveRecord::Base
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, uniqueness: true, presence: true, format: { with: VALID_EMAIL_REGEX  }
+
+  def following? user
+    self.followeds.include? user
+  end
+
+  def follow user
+      Relationship.create follower_id: self.id, followed_id: user.id
+  end
 
   private
 
