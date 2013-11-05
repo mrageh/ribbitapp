@@ -3,7 +3,7 @@
     <h1>Create a Ribbit</h1>
     <p>
     <%= form_for @ribbit do |f| %>
-        <%= f.textarea :content, class: 'ribbitText' %>
+        <%= f.text_area :content, class: 'ribbitText' %>
         <%= f.submit "Ribbit!" %>
     <% end %>
     </p>
